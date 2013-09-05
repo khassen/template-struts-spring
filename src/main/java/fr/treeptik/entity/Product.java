@@ -1,10 +1,17 @@
 package fr.treeptik.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Product implements Serializable{
@@ -17,6 +24,17 @@ public class Product implements Serializable{
     
     private String ref;
     private String description;
+    
+	@Enumerated(EnumType.STRING)
+	@Column(name="DTYPE")
+	private DTYPE dtype;
+	
+
+	
+	  //table de jointure:
+	@ManyToMany
+	@JoinTable(name="PROJECT_EMPLOYEE", joinColumns=@JoinColumn(name="PROJECTS_ID"),inverseJoinColumns=@JoinColumn(name="EMPLOYEES_ID"))
+    private List<Employee> employees;
     
     public Product() {
 	}
@@ -60,6 +78,26 @@ public class Product implements Serializable{
 	public String toString() {
 		return "Product [id=" + id + ", ref=" + ref + ", description="
 				+ description + "]";
+	}
+
+
+	public DTYPE getDtype() {
+		return dtype;
+	}
+
+
+	public void setDtype(DTYPE dtype) {
+		this.dtype = dtype;
+	}
+
+
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 
     

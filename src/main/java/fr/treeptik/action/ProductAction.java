@@ -7,6 +7,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 import fr.treeptik.entity.Product;
+import fr.treeptik.service.ProductService;
 
 @Component(value = "productAction")
 @Scope("prototype")
@@ -25,29 +27,46 @@ public class ProductAction extends ActionSupport implements
 
 	private Product product = new Product();
 	private List<Product> products;
+	
+	@Autowired
+	private ProductService productService;
 
 	@Override
 	public Product getModel() {
 		return product;
 	}
 	
+	
+	public void validate() {
+
+		if (getProduct().getRef().trim().length() == 0) {
+			addFieldError("Ref", "Ref is required.");
+		}
+
+	}
+	
+	
+	
+	
 	@Action(value = "addAction", results = {
 			@Result(name = "success", type = "redirectAction", location = "listAction.action"),
 			@Result(name = "input", location = "/product/add.jsp") })
 	public String addProduct() throws Exception {
-		System.out.println("ADD PRODUCT");
-
-		System.out.println(product);
+	
+		productService.add(product);
 
 		return "success";
 	}
 
+	
+	
+	
 	@Action(value = "listAction", results = {
 			@Result(name = "success", location = "/product/list.jsp")})
 	@SkipValidation
 	public String listProducts() throws Exception {
 
-		products = Arrays.asList(new Product(1, "REF1", "DESC1"), new Product(2, "REF2", "DESC2"));
+		products = productService.getAll();
 
 		return "success";
 	}

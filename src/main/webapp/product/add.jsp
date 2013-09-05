@@ -6,7 +6,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-
+ <%@ include file="/header.jsp" %>
         <h2>Add Products</h2>
         
         <s:actionerror/>
@@ -17,7 +17,7 @@
             <s:submit />
         </s:form>
 
-       
+  	<%@ include file="/footer.jsp" %>        
         
     </body>
 </html>

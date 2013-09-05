@@ -16,4 +16,6 @@ public interface EmployeeDao  extends JpaRepository<Employee, Integer>{
     @Query("select e from Employee e where e.lastname=:lastname")
     public List<Employee> findAllByLastname(@Param("lastname") String lastname);
     
+    
+    
 }

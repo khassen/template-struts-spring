@@ -7,6 +7,7 @@
 <title>List Products</title>
 </head>
 <body>
+ <%@ include file="/header.jsp" %>
 	<table border="1px" cellpadding="8px">
 		<tr>
 			<th>ID</th>
@@ -21,5 +22,6 @@
 			</tr>
 		</s:iterator>
 	</table>
+		<%@ include file="/footer.jsp" %>   
 </body>
 </html>

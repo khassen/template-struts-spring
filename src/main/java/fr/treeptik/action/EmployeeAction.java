@@ -18,8 +18,10 @@ import com.opensymphony.xwork2.ModelDriven;
 import fr.treeptik.entity.Employee;
 import fr.treeptik.service.EmployeeService;
 
+//2 ANNOTATIONS SPRING
 @Component(value = "employeeAction")
 @Scope("prototype")
+
 @Namespace("/employee")
 public class EmployeeAction extends ActionSupport implements
 		ModelDriven<Employee> {
@@ -44,15 +46,20 @@ public class EmployeeAction extends ActionSupport implements
 		}
 
 	}
-
+	
+//peut etre appeler depuis un url: localhost../nomprojet/addAction.action
+//je manipule directement l'objet dans ma methode comme dans jsf
+//succes, si les sont valid
+//input: qd il y a une erreur de validation, je retourne à la page add
+// qd c une page je vais sur une jsp, qd c un action j arrive sur une methode
+//si on a pas les plugins cette conf se fait en fichier xml
+// pour untiliser hibernate validator en struts on ajoute  aprés "addAction" et avant "Result":	interceptorRefs =@InterceptorRef("basicStackHibernate')")
+	
 	@Action(value = "addAction", results = {
 			@Result(name = "success", type = "redirectAction", location = "listAction.action"),
 			@Result(name = "input", location = "/employee/add.jsp") })
 	public String addEmployee() throws Exception {
-		System.out.println("ADD EMPLOYEE");
 
-		System.out.println(employee);
-		
 		employeeService.add(employee);
 
 		return "success";

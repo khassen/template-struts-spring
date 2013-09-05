@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Employee implements Serializable{
@@ -22,6 +24,10 @@ public class Employee implements Serializable{
     private String email;
      
     private String telephone;
+    
+    @ManyToOne() 
+    @JoinColumn(name="DEPARTMENT_ID")
+    private Department department;
 
     public Employee() {
 	}
@@ -82,6 +88,14 @@ public class Employee implements Serializable{
 		return "EmployeeEntity [id=" + id + ", firstname=" + firstname
 				+ ", lastname=" + lastname + ", email=" + email
 				+ ", telephone=" + telephone + "]";
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
     
      

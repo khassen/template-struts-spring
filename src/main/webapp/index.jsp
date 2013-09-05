@@ -7,6 +7,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+     <%@ include file="/header.jsp" %>
         <h1>Available actions</h1>
         <a href="pages/AddEmployee.jsp">Add Employee</a>
         
@@ -25,6 +26,6 @@
         <h2>Message</h2>
         
         <s:text name="test.message" />
-        
+     	<%@ include file="/footer.jsp" %>      
     </body>
 </html>
