@@ -21,7 +21,6 @@ import fr.treeptik.service.EmployeeService;
 //2 ANNOTATIONS SPRING
 @Component(value = "employeeAction")
 @Scope("prototype")
-
 @Namespace("/employee")
 public class EmployeeAction extends ActionSupport implements
 		ModelDriven<Employee> {
@@ -30,7 +29,7 @@ public class EmployeeAction extends ActionSupport implements
 
 	@Autowired
 	private EmployeeService employeeService;
-	
+
 	private Employee employee = new Employee();
 	private List<Employee> employees = new ArrayList<>();
 
@@ -41,20 +40,39 @@ public class EmployeeAction extends ActionSupport implements
 
 	public void validate() {
 
-		if (getEmployee().getFirstname().trim().length() == 0) {
-			addFieldError("firstname", "First name is required.");
+		if (getEmployee().getFirstname().trim().length() == 0
+				| getEmployee().getFirstname().trim().length() < 2) {
+			addFieldError("firstname",
+					"First name is required, minumum two letters");
+		}
+
+		if (getEmployee().getLastname().trim().length() == 0
+				| getEmployee().getLastname().trim().length() < 2) {
+
+			addFieldError("lastName",
+					"lastName is requered , minumum two letters");
+		}
+
+		if ( !getEmployee().getTelephone().matches("[0-9]*") | getEmployee().getTelephone().trim().length() != 8 ) {
+			addFieldError("telephone", "Telephone contains 8 digitals");
+		}
+		if (getEmployee().getEmail().trim().length() == 0 | ! getEmployee().getEmail().matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$") ){
+			addFieldError("email", "email is requered");
 		}
 
 	}
-	
-//peut etre appeler depuis un url: localhost../nomprojet/addAction.action
-//je manipule directement l'objet dans ma methode comme dans jsf
-//succes, si les sont valid
-//input: qd il y a une erreur de validation, je retourne à la page add
-// qd c une page je vais sur une jsp, qd c un action j arrive sur une methode
-//si on a pas les plugins cette conf se fait en fichier xml
-// pour untiliser hibernate validator en struts on ajoute  aprés "addAction" et avant "Result":	interceptorRefs =@InterceptorRef("basicStackHibernate')")
-	
+
+	// peut etre appeler depuis un url: localhost../nomprojet/addAction.action
+	// je manipule directement l'objet dans ma methode comme dans jsf
+	// succes, si les sont valid
+	// input: qd il y a une erreur de validation, je retourne à la page add
+	// qd c une page je vais sur une jsp, qd c un action j arrive sur une
+	// methode
+	// si on a pas les plugins cette conf se fait en fichier xml
+	// pour untiliser hibernate validator en struts on ajoute aprés "addAction"
+	// et avant "Result": interceptorRefs
+	// =@InterceptorRef("basicStackHibernate')")
+
 	@Action(value = "addAction", results = {
 			@Result(name = "success", type = "redirectAction", location = "listAction.action"),
 			@Result(name = "input", location = "/employee/add.jsp") })
@@ -65,8 +83,7 @@ public class EmployeeAction extends ActionSupport implements
 		return "success";
 	}
 
-	@Action(value = "listAction", results = {
-			@Result(name = "success", location = "/employee/list.jsp")})
+	@Action(value = "listAction", results = { @Result(name = "success", location = "/employee/list.jsp") })
 	@SkipValidation
 	public String listEmployees() throws Exception {
 		employees = employeeService.getAll();
