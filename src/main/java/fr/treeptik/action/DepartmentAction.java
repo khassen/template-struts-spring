@@ -39,10 +39,9 @@ ModelDriven<Department> {
 
 	
 	public void validate() {
-		System.out.println("lol2");
 		if (department.getName().trim().length() == 0) {
 			addFieldError("name", "Name is required.");
-			System.out.println("lol3");
+
 		}
 
 	}

@@ -15,6 +15,7 @@
 			<th>Last name</th>
 			<th>Email</th>
 			<th>Telephone</th>
+			<th>Date embauche</th>
 		</tr>
 		<s:iterator value="employees">
 			<tr>
@@ -23,6 +24,7 @@
 				<td><s:property value="lastname" /></td>
 				<td><s:property value="email" /></td>
 				<td><s:property value="telephone" /></td>
+				<td><s:property value="dateEmbauche" /></td>
 			</tr>
 		</s:iterator>
 	</table>

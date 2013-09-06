@@ -1,6 +1,6 @@
 package fr.treeptik.action;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -31,6 +31,8 @@ public class ProductAction extends ActionSupport implements
 	@Autowired
 	private ProductService productService;
 
+	private List<String> dtypes = new ArrayList<String>();
+	
 	@Override
 	public Product getModel() {
 		return product;
@@ -40,9 +42,12 @@ public class ProductAction extends ActionSupport implements
 	public void validate() {
 
 		if (getProduct().getRef().trim().length() == 0) {
-			addFieldError("Ref", "Ref is required.");
+			addFieldError("ref", "ref is required.");
 		}
-
+		
+		if (getProduct().getDtype().compareTo(null)==0){
+			addFieldError("dtype", "choose DP or QP");
+		}
 	}
 	
 	
@@ -50,9 +55,14 @@ public class ProductAction extends ActionSupport implements
 	
 	@Action(value = "addAction", results = {
 			@Result(name = "success", type = "redirectAction", location = "listAction.action"),
-			@Result(name = "input", location = "/product/add.jsp") })
+			@Result(name = "input", location = "/product/add.jsp")})
 	public String addProduct() throws Exception {
 	
+		
+//		
+//		dtypes.add("DP");
+//		dtypes.add("QP");
+		
 		productService.add(product);
 
 		return "success";
@@ -85,6 +95,26 @@ public class ProductAction extends ActionSupport implements
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+
+	public ProductService getProductService() {
+		return productService;
+	}
+
+
+	public void setProductService(ProductService productService) {
+		this.productService = productService;
+	}
+
+
+	public List<String> getDtypes() {
+		return dtypes;
+	}
+
+
+	public void setDtypes(List<String> dtypes) {
+		this.dtypes = dtypes;
 	}
 
 

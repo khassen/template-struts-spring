@@ -15,6 +15,7 @@
         
         <s:form action="addAction" >
             <s:textfield name="name" label="Name" />
+          
             <s:submit />
         </s:form>
 

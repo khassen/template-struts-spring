@@ -12,42 +12,46 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-public class Product implements Serializable{
-    
+public class Product implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private Integer id;
-    
-    private String ref;
-    private String description;
-    
-	@Enumerated(EnumType.STRING)
-	@Column(name="DTYPE")
-	private DTYPE dtype;
-	
+	@Id
+	@GeneratedValue
+	private Integer id;
 
-	
-	  //table de jointure:
+	@NotNull
+	private String ref;
+
+	@Valid
+	private String description;
+
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "DP or QP")
+	@Column(name = "DTYPE")
+	private DTYPE dtype;
+
+	// table de jointure:
 	@ManyToMany
-	@JoinTable(name="PROJECT_EMPLOYEE", joinColumns=@JoinColumn(name="PROJECTS_ID"),inverseJoinColumns=@JoinColumn(name="EMPLOYEES_ID"))
-    private List<Employee> employees;
-    
-    public Product() {
+	@JoinTable(name = "PROJECT_EMPLOYEE", joinColumns = @JoinColumn(name = "PROJECTS_ID"), inverseJoinColumns = @JoinColumn(name = "EMPLOYEES_ID"))
+	private List<Employee> employees;
+
+	public Product() {
 	}
 
-    
-	public Product(Integer id, String ref, String description) {
+	public Product(Integer id, String ref, String description, DTYPE dtype) {
 		super();
 		this.id = id;
 		this.ref = ref;
 		this.description = description;
+		this.dtype = dtype;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -73,32 +77,26 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", ref=" + ref + ", description="
 				+ description + "]";
 	}
 
-
 	public DTYPE getDtype() {
 		return dtype;
 	}
-
 
 	public void setDtype(DTYPE dtype) {
 		this.dtype = dtype;
 	}
 
-
 	public List<Employee> getEmployees() {
 		return employees;
 	}
-
 
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
 
-    
 }

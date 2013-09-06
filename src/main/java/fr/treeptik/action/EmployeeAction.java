@@ -1,7 +1,7 @@
 package fr.treeptik.action;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -59,6 +59,10 @@ public class EmployeeAction extends ActionSupport implements
 		if (getEmployee().getEmail().trim().length() == 0 | ! getEmployee().getEmail().matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$") ){
 			addFieldError("email", "email is requered");
 		}
+		if (getEmployee().getDateEmbauche().equals(null)  ){
+			addFieldError("dateEmbauche", "Do past Date");
+		}
+		
 
 	}
 

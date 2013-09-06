@@ -17,6 +17,7 @@
             <s:textfield name="lastname" label="Last Name"  />
             <s:textfield name="email" label="Email" />
             <s:textfield name="telephone" label="Telephone"  />
+              <s:textfield name="dateEmbauche" label="Date d'embauche" />
             <s:submit />
         </s:form>
 
